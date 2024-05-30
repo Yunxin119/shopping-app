@@ -1,0 +1,36 @@
+/* src/custom.css */
+:root {
+    --primary-color: #edc7b7; /* background */
+    --secondary-color: #eee2dc; /* second background */
+    --text-color: #123c69; /* text */
+    --sectext-color: #ac3b61; /* second text */
+    --shadow-color: #bab2b5; /* shadow hover */
+    --success-color: #7fbc8d; /* success */
+    --info-color: #439aa8; /* info */
+    --warning-color: #e7d293; /* warning */
+    --danger-color: #ca5e68; /* danger */
+  }
+  
+  /* Background Colors */
+  .bg-primary {
+    background-color: var(--primary-color) !important;
+  }
+  
+  .bg-secondary {
+    background-color: var(--secondary-color) !important;
+  }
+  
+  /* Text Colors */
+  .text-primary {
+    color: var(--text-color) !important;
+  }
+  
+  .text-secondary {
+    color: var(--sectext-color) !important;
+  }
+  
+  /* Shadow Color */
+  .shadow-custom {
+    box-shadow: 0 4px 8px var(--shadow-color);
+  }
+  
