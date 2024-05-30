@@ -1,10 +1,19 @@
 import React from 'react'
+import { Container } from 'react-bootstrap';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import './assets/custom.css';
 
 const App = () => {
   return (
     <>
-    <h1 className='text-primary'>Hello World</h1>
+    <Header />
+    <main>
+      <Container>
+
+      </Container>
+    </main>
+    <Footer />
     </>
   )
 }
