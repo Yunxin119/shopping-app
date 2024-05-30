@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import './assets/custom.css';
-import Home from './screens/Home';
+import { Outlet } from 'react-router-dom';
 
 const App = () => {
   return (
@@ -11,7 +11,7 @@ const App = () => {
     <Header />
     <main>
       <Container>
-        <Home />
+        <Outlet />
       </Container>
     </main>
     <Footer />
