@@ -5,22 +5,22 @@ import { LinkContainer } from 'react-router-bootstrap';
 const Header = () => {
 return (
     <header>
-    <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
+    <Navbar className='custom-nav' expand='lg' collapseOnSelect>
         <Container>
             <LinkContainer to='/'>
-                <Navbar.Brand>Yunxin's</Navbar.Brand>
+                <Navbar.Brand className='custom-nav-txt'>Yunxin's</Navbar.Brand>
             </LinkContainer>
             
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav'>
                 <Nav className='ms-auto'>
                     <LinkContainer to='/cart'>
-                        <Nav.Link >
+                        <Nav.Link className='custom-nav-txt'>
                             <FaShoppingCart /> Cart
                         </Nav.Link>
                     </LinkContainer>
                     <LinkContainer to='/login'>
-                        <Nav.Link>
+                        <Nav.Link className='custom-nav-txt'>
                             <FaUser /> Log in
                         </Nav.Link>
                     </LinkContainer>
