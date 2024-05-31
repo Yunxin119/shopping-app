@@ -5,7 +5,8 @@ import path from 'path'
 import products from './data/products.js';
 const app = express();
 
-const port = process.env.PORT || 5000;
+// const port = process.env.PORT || 5000;
+const port = 5000;
 
 app.get('/', (req, res) => {
     res.send('API is running');
