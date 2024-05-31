@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import products from '../products'
 import { Link } from 'react-router-dom'
 import Rating from '../components/Rating'
-import {Row, Col, Image, ListGroup, Card, Button, ListGroupItem } from 'react-bootstrap'
+import {Row, Col, Image, ListGroup, Button, ListGroupItem } from 'react-bootstrap'
 
 const ProductDetail = () => {
     const {id} = useParams();
