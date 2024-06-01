@@ -8,12 +8,16 @@
     "start": "node server/server.js",
     "server": "nodemon server/server.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import": "node server/seeder.js",
+    "data:destroy": "node server/seeder.js -d"
   },
   "author": "Yunxin Liu",
   "license": "MIT",
   "dependencies": {
     "babel-preset-react-app": "^10.0.1",
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
     "concurrently": "^8.2.2",
     "express": "^4.19.2",
     "mongodb": "4.1",

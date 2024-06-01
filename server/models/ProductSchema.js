@@ -1,5 +1,15 @@
 import mongoose from "mongoose";
 
+const reviewSchema = new mongoose.Schema ({
+    // the user here is to know who posted the review
+    user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
+    name: { type: String, required: true },
+    rating: { type: Number, required: true },
+    content: { type: String, required: true },
+}, {
+    timestamps: true
+})
+
 const productSchema = new mongoose.Schema ({
     // the user here is because we wanna know whether the user is admin or not
     user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
@@ -17,15 +27,7 @@ const productSchema = new mongoose.Schema ({
     timestamps: true
 })
 
-const reviewSchema = new mongoose.Schema ({
-    // the user here is to know who posted the review
-    user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
-    name: { type: String, required: true },
-    rating: { type: Number, required: true },
-    content: { type: String, required: true },
-}, {
-    timestamps: true
-})
+
 
 const Product = mongoose.model('Product', productSchema);
 export default Product;
