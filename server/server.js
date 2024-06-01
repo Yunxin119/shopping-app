@@ -3,7 +3,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 import connect from './config/db.js';
 import path from 'path'
-import products from './data/products.js';
+import ProductRoutes from './routes/ProductRoutes.js';
+
 
 // connect to mongoDB
 connect();
@@ -18,17 +19,9 @@ app.get('/', (req, res) => {
     res.send('API is running');
 })
 
-// GET: Products Index
-app.get('/api/products', (req, res) => {
-    res.send(products)
-})
+// Using router in product routes file
+app.use('/api/products', ProductRoutes);
 
-// GET: Product Detail
-app.get('/api/products/:id', (req, res) => {
-    const {id} = req.params;
-    const product = products.find((p)=> p._id === id);
-    res.json(product)
-})
 
 app.listen(port, ()=> {
     console.log(`APP RUNNING ON PORT ${port}`)
