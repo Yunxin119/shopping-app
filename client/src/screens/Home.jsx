@@ -1,8 +1,10 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import {Row, Col} from 'react-bootstrap'
+import Loader from '../components/Loader'
 import Product from '../components/Product'
 import { useGetProductsQuery } from '../slices/productsApiSlice'
+import Message from '../components/Message'
 
 const Home = () => {
   const { data: products, isLoading, error } = useGetProductsQuery();
@@ -11,9 +13,9 @@ const Home = () => {
   return (
     <>
     {isLoading ? (
-      <h2 className='txt-head'>Loading...</h2>
+      <Loader /> 
     ): error ? (
-      <div>{error?.data?.message || error.error}</div>
+      <Message variant={danger}>{error?.data?.message || error.error}</Message>
     ) : (
       <>
         <h2 className='txt-head'>Latest Products</h2>
