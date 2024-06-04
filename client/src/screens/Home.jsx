@@ -15,7 +15,7 @@ const Home = () => {
     {isLoading ? (
       <Loader /> 
     ): error ? (
-      <Message variant={danger}>{error?.data?.message || error.error}</Message>
+      <Message variant='danger'>{error?.data?.message || error.error}</Message>
     ) : (
       <>
         <h2 className='txt-head'>Latest Products</h2>

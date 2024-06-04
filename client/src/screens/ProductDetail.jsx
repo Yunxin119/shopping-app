@@ -1,15 +1,27 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useState } from 'react'
 import { useGetProductDetailQuery } from '../slices/productsApiSlice'
-import axios from 'axios'
 import { Link } from 'react-router-dom'
 import Rating from '../components/Rating'
-import {Row, Col, Image, ListGroup, Button, ListGroupItem } from 'react-bootstrap'
+import {Row, Col, Image, ListGroup, Button, ListGroupItem, Form } from 'react-bootstrap'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
+import { addToCart } from '../slices/cartSlice'
 
 const ProductDetail = () => {
     const {id} = useParams();
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [qty, setQty] = useState(1);
+
+    const addToCartHandler = () => {
+        dispatch(addToCart({...product, qty}))
+        navigate('/cart')
+    }
 
     const { data: product, isLoading, error } = useGetProductDetailQuery(id);
 
@@ -23,7 +35,7 @@ const ProductDetail = () => {
         <Loader />
     ) : 
     error ? (
-        <Message variant={danger}>{error?.data?.message || error.error}</Message>
+        <Message variant='danger'>{error?.data?.message || error.error}</Message>
     ) : (<>
         <Row>
         <Col md={6}>
@@ -53,16 +65,28 @@ const ProductDetail = () => {
                     <p className='product-description'>{product.description}</p>
                 </ListGroupItem>
                 <ListGroup.Item className='d-flex align-items-center custom-list-group-item-down'>
-                    <Button id='add-to-cart' type='button' disabled={product.countInStock === 0}>
+                    <Button id='add-to-cart' type='button' 
+                    disabled={product.countInStock === 0}
+                    onClick={addToCartHandler}>
                         Add to Cart
                     </Button>
-                    <select id='quantity-select' className='form-select'>
+                    <Form.Control
+                             as='select'
+                             value={qty}
+                             onChange={(e) => setQty(e.target.value)}
+                             id='quantity-select' className='form-select'
+                    >
+                        {[...Array(product.countInStock).keys()].map((i)=> (
+                            <option key = {i+1} value = {i+1}>{i+1}</option>
+                        ))}
+                    </Form.Control>
+                    {/* <select >
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
                         <option value="5">5</option>
-                    </select>
+                    </select> */}
                 </ListGroup.Item>
 
             </ListGroup>
