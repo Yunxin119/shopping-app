@@ -1,26 +1,15 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import {useState, useEffect} from 'react'
-// import products from '../products'
+import { useGetProductDetailQuery } from '../slices/productsApiSlice'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import Rating from '../components/Rating'
 import {Row, Col, Image, ListGroup, Button, ListGroupItem } from 'react-bootstrap'
 
 const ProductDetail = () => {
-
-    const [product, setProduct] = useState([])
-
     const {id} = useParams();
 
-    const fetchProduct = async() => {
-      const {data} = await axios.get(`/api/products/${id}`);
-      setProduct(data);
-    };
-  
-    useEffect(()=>{
-      fetchProduct();
-    }, [id]);
+    const { data: product, isLoading, error } = useGetProductDetailQuery(id);
 
   return (
     <>
@@ -28,7 +17,13 @@ const ProductDetail = () => {
         Home
     </Link>
 
-    <Row>
+    {isLoading ? (
+        <h2>Loading...</h2>
+    ) : 
+    error ? (
+        <div>{error?.data?.message || error.error}</div>
+    ) : (<>
+        <Row>
         <Col md={6}>
             <Image src={product.image} alt={product.name} fluid />
         </Col>
@@ -71,6 +66,9 @@ const ProductDetail = () => {
             </ListGroup>
         </Col>
     </Row>
+    </>)}
+
+
 
     </>
   )
