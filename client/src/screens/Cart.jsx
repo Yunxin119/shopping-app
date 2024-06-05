@@ -28,6 +28,10 @@ const Cart = () => {
   const removeFromCartHandler = async (product) => {
     dispatch(removeFromCart(product));
   }
+
+  const checkOutHandler = () => {
+    navigate('/login?redirect=/shipping');
+  }
   
   return (
     <Row>
@@ -98,6 +102,7 @@ const Cart = () => {
                 type='button'
                 className='btn-block'
                 disabled={cartItems.length === 0}
+                onClick={checkOutHandler}
               >
                 Proceed To Checkout
               </Button>
