@@ -88,7 +88,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 #quantity-select {
-  width: 70px; /* Adjust the width as needed */
+  width: 70px;
 }
 
 .rating span {
@@ -139,4 +139,33 @@ table th {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
+}
+
+.cart-txt {
+  color: #777777;
+}
+
+.cart-selector {
+  padding: 10px; 
+  margin-right: 10px; 
+  /* width: 70px; */
+}
+
+.cart-delete {
+  margin-top: 0.2rem;
+  padding: 5px; 
+  margin-left: 5px; /* Adjust margin to reduce space between selector and delete button */
+}
+
+.cart-price {
+  margin-top: 0.1rem;
+}
+
+#cart-card {
+  margin-top: 77px;
+  text-align: center;
+}
+
+.item-col {
+  margin-top: 10px;
 }
