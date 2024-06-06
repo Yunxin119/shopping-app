@@ -4,6 +4,7 @@ dotenv.config();
 import connect from './config/db.js';
 import path from 'path'
 import ProductRoutes from './routes/ProductRoutes.js';
+import UserRoutes from './routes/UserRoutes.js'
 import { notFound, errorHandler } from './middleware/errorHandler.js';
 
 // connect to mongoDB
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 
 // Using router in product routes file
 app.use('/api/products', ProductRoutes);
+app.use('/api/users', UserRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
