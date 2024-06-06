@@ -2,12 +2,26 @@ import asyncHandler from "../middleware/asyncHandler.js";
 import User from '../models/UserSchema.js'
 
 // @desc: authorize user
- // @route: POST /api/users/login
+ // @route: POST /api/users/auth
  // @access: Public
  const authUser = asyncHandler(async (req, res) => {
-    res.send('auth user');
+    const { email, password } = req.body;
+  
+    if (!email || !password) {
+      res.status(400);
+      throw new Error('Please provide both email and password');
+    }
+  
+    const user = await User.findOne({ email });
+  
+    if (user && (await user.matchPassword(password))) {
+      res.json(user.toObject()); // Use .toObject() to convert Mongoose document to plain JS object
+    } else {
+      res.status(401);
+      throw new Error('Invalid Email or Password. Please Try Again.');
+    }
   });
-
+  
 
 // @desc: register a new user
 // @route: POST /api/users

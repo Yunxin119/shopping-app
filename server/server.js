@@ -20,6 +20,9 @@ app.get('/', (req, res) => {
     res.send('API is running');
 })
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Using router in product routes file
 app.use('/api/products', ProductRoutes);
 app.use('/api/users', UserRoutes);
