@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser'
 dotenv.config();
 import connect from './config/db.js';
 import path from 'path'
@@ -22,6 +23,9 @@ app.get('/', (req, res) => {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Cookie Parser midlleware
+app.use(cookieParser())
 
 // Using router in product routes file
 app.use('/api/products', ProductRoutes);
