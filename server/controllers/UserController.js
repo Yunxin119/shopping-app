@@ -1,6 +1,6 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import User from '../models/UserSchema.js'
-import jwt from 'jsonwebtoken'
+import generateToken from "../utils/generateToken.js";
 
 // @desc: authorize user
  // @route: POST /api/users/auth
@@ -18,14 +18,7 @@ import jwt from 'jsonwebtoken'
     const user = await User.findOne({ email });
   
     if (user && (await user.matchPassword(password))) {
-      const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET, {expiresIn: '30d'});
-      //Set JWT as HTTP-only cookie
-      res.cookie('jwt', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV !== 'development',
-        sameSite: 'strict',
-        maxAge: 30*24*60*60*1000 // 30 days
-    })
+      generateToken(res, user._id);
       res.json(user.toObject()); // Use .toObject() to convert Mongoose document to plain JS object
     } else {
       res.status(401);
@@ -33,11 +26,42 @@ import jwt from 'jsonwebtoken'
     }
   });
   
+// @desc: logout user
+// @route: POST /api/users/logout
+// @access Private
+const logoutUser = asyncHandler(async(req, res) => {
+  res.cookie('jwt', 'loggedout', {
+    httpOnly: true,
+    expires: new Date(0)
+  })
+
+   res.status(200).json({Message: 'Logged Out Successfully'})
+})
 
 // @desc: register a new user
 // @route: POST /api/users
 // @access: Public
 const registerUser = asyncHandler(async (req, res) => {
+  const {username, email, password} = req.body;
+  const userExist = await User.findOne({email})
+  if (userExist) {
+    res.status(400);
+    throw new Error ('User already exist')
+  }
+
+  const user = await User.create({
+    username, email, password
+  })
+
+  if (user) {
+    generateToken(res, user._id)
+    res.status(201).json({
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    })
+  }
     // const user = req.params;
     // User.insert(user);
     res.send('register user')
@@ -77,9 +101,29 @@ const getUserById = asyncHandler(async (req, res) => {
   });
 
 // @desc: update user
-// @route: PATCH /api/users/:id
+// @route: PATCH /api/users/profile
 const updateUserById = asyncHandler(async (req, res) => {
-    res.send('update user by id')
+  const user = await User.findById(req.user._id);
+  if (user) {
+    user.username = req.body.username || user.username;
+    user.email = req.body.email || user.email;
+
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+
+    const updatedUser = await user.save()
+
+    res.status(200).json({
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    })
+  } else {
+    res.status(404)
+    throw new Error ('User Not Found')
+  }
 })
 
 
@@ -87,14 +131,26 @@ const updateUserById = asyncHandler(async (req, res) => {
 // route: GET /api/users/profile
 // @access: Private
 const getUserProfile = asyncHandler(async (req, res) => {
-    res.send('getUserProfile')
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+      res.status(200).json({
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      })
+    } else {
+      res.status(404)
+      throw new Error ('User not found')
+    }
 })
 
 // @desc: update user profile
-// @route: PATCH /api/users/:id
+// @route: PATCH /api/users/profile
 // @access: Private
 const updateUserProfile = asyncHandler(async (req, res) => {
-    res.send('update user profile')
+  res.send('Update User')
 })
 
-export { authUser, registerUser, getAllUser, getUserById, updateUserById, getUserProfile, updateUserProfile, deleteUser }
+export { authUser, registerUser, logoutUser, getAllUser, getUserById, updateUserById, getUserProfile, updateUserProfile, deleteUser }
