@@ -6,6 +6,7 @@ import connect from './config/db.js';
 import path from 'path'
 import ProductRoutes from './routes/ProductRoutes.js';
 import UserRoutes from './routes/UserRoutes.js'
+import OrderRoutes from './routes/OrderRoutes.js'
 import { notFound, errorHandler } from './middleware/errorHandler.js';
 
 // connect to mongoDB
@@ -30,6 +31,7 @@ app.use(cookieParser())
 // Using router in product routes file
 app.use('/api/products', ProductRoutes);
 app.use('/api/users', UserRoutes);
+app.use('/api/orders', OrderRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
