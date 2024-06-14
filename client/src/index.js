@@ -20,6 +20,7 @@ import Login from './screens/Login';
 import Register from './screens/Register';
 import Shipping from './screens/Shipping';
 import PrivateRoute from './components/PrivateRoute'
+import Payment from './screens/Payment';
 
 
 const router = createBrowserRouter(
@@ -33,6 +34,7 @@ const router = createBrowserRouter(
     
       <Route path='' element={<PrivateRoute />}>
         <Route index={true} path='/shipping' element={<Shipping />} />
+        <Route index={true} path='/payment' element={<Payment />} />
       </Route>
     </Route>
   )
