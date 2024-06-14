@@ -18,6 +18,8 @@ import ProductDetail from './screens/ProductDetail';
 import Cart from './screens/Cart';
 import Login from './screens/Login';
 import Register from './screens/Register';
+import Shipping from './screens/Shipping';
+import PrivateRoute from './components/PrivateRoute'
 
 
 const router = createBrowserRouter(
@@ -28,6 +30,10 @@ const router = createBrowserRouter(
       <Route index={true} path='/cart' element={<Cart />} />
       <Route index={true} path='/login' element={<Login />} />
       <Route index={true} path='/register' element={<Register />} />
+    
+      <Route path='' element={<PrivateRoute />}>
+        <Route index={true} path='/shipping' element={<Shipping />} />
+      </Route>
     </Route>
   )
 )
