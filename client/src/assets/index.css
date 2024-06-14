@@ -169,3 +169,8 @@ table th {
 .item-col {
   margin-top: 10px;
 }
+
+.checkout-steps {
+  color:#656565;
+  font-size: 0.9rem;
+}
