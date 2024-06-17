@@ -174,3 +174,33 @@ table th {
   color:#656565;
   font-size: 0.9rem;
 }
+
+.payment-left, .payment-right {
+  border-radius: 0.7rem;
+  background-color: white;
+  padding: 2%;
+}
+
+.payment-right .list-group{
+    border: none;
+    margin: 2%;
+}
+
+.payment-right .list-group-item{
+  border: none;
+  padding: 4%;
+}
+
+.payment-head {
+  color: #777777;
+}
+
+.button-full {
+  width: calc(100% - 0.2rem); 
+}
+
+.center-button {
+  width: 25%;
+  justify-content: center;
+  margin: 5% auto 0 auto;
+}

@@ -73,7 +73,7 @@ const Shipping = () => {
            ></Form.Control>
          </Form.Group>
 
-         <Button type='submit' variant='primary' className='my-3'>
+         <Button type='submit' variant='primary' className='my-4 d-flex center-button'>
            Continue
          </Button>
        </Form>
