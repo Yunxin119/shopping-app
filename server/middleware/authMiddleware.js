@@ -24,7 +24,7 @@ export const protect = asyncHandler(async(req, res, next) => {
     }
 })
 
-// Adimin middleware
+// Admin middleware
 export const admin = (req, res, next) => {
     if (req.user && req.user.isAdmin) {
         next();

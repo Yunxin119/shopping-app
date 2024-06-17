@@ -1,8 +1,6 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Order from "../models/OrderSchema.js"
 import User from "../models/UserSchema.js";
-const asyncHandler = require('express-async-handler');
-const Order = require('../models/orderModel'); // 假设 Order 模型在 models 目录中
 
 // @desc Create new order
 // @route POST /api/orders

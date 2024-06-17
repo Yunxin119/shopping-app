@@ -82,7 +82,7 @@ const PlaceOrder = () => {
                             />
                             </Col>
                             <Col>
-                            <Link to={`/product/${item.product}`}>
+                            <Link to={`/product/${item.product}`} className='custom-link'>
                                 {item.name}
                             </Link>
                             </Col>
