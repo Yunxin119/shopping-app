@@ -24,39 +24,41 @@ const PlaceOrder = () => {
         }
     }, [navigate, cart.shippingAddress.address, cart.paymentMethod])
 
-    const placeOrderHandler = async() => {
-        try {
-            const res = await createOrder({
-                orderItems: cart.cartItems,
-                shippingAddress: cart.shippingAddress,
-                paymentMethod: cart.paymentMethod,
-                itemsPrice: cart.itemsPrice,
-                taxPrice: cart.taxPrice,
-                shippingPrice: cart.shippingPrice,
-                totalPrice: cart.totalPrice,
-            }).unwrap();
-            dispatch(clearCartItems());
-            navigate(`/order/${res._id}`)
-        } catch (error) {
-            toast.error(error)
-        }
-    }
-  return (
-    <>
-        <CheckoutSteps step1 step2 step3 step4 />
-        <Row>
-         <Col md={8}>
-            <Card className='payment-left'>
-                <ListGroup variant='flush' >
-                <ListGroup.Item>
-                <h3 className='payment-head'>Shipping</h3>
-                <p>
-                    <strong className='payment-head'>Address:</strong>
-                    {cart.shippingAddress.address}, {cart.shippingAddress.city}{' '}
-                    {cart.shippingAddress.postalCode},{' '}
-                    {cart.shippingAddress.country}
-                </p>
-                </ListGroup.Item>
+     const placeOrderHandler = async () => {
+      try {
+          const res = await createOrder({
+              orderItems: cart.cartItems,
+              shippingAddress: cart.shippingAddress,
+              paymentMethod: cart.paymentMethod,
+              itemsPrice: cart.itemsPrice,
+              taxPrice: cart.taxPrice,
+              shippingPrice: cart.shippingPrice,
+              totalPrice: cart.totalPrice,
+          }).unwrap();
+  
+          dispatch(clearCartItems());
+          navigate(`/order/${res._id}`);
+      } catch (error) {
+          toast.error(error?.data?.message || error.message || JSON.stringify(error));
+      }
+  };
+
+   return (
+     <>
+         <CheckoutSteps step1 step2 step3 step4 />
+         <Row>
+          <Col md={8}>
+             <Card className='payment-left'>
+                 <ListGroup variant='flush' >
+                 <ListGroup.Item>
+                 <h3 className='payment-head'>Shipping</h3>
+                 <p>
+                     <strong className='payment-head'>Address:</strong>
+                     {cart.shippingAddress.address}, {cart.shippingAddress.city}{' '}
+                     {cart.shippingAddress.postalCode},{' '}
+                     {cart.shippingAddress.country}
+                 </p>
+                 </ListGroup.Item>
 
                 <ListGroup.Item>
                 <h3 className='payment-head'>Payment Method</h3>
@@ -98,57 +100,57 @@ const PlaceOrder = () => {
             </ListGroup>
             </Card>
 
-         </Col>
-         <Col md={4}>
-           <Card className='payment-right'>
-             <ListGroup variant='flush'>
-               <ListGroup.Item>
-                 <h3 className='payment-head'>Order Summary</h3>
-               </ListGroup.Item>
-               <ListGroup.Item>
-                 <Row>
-                   <Col className='payment-head'><b>Items:</b></Col>
-                   <Col>${cart.itemPrice}</Col>
-                 </Row>
-               </ListGroup.Item>
-               <ListGroup.Item>
-                 <Row>
-                   <Col className='payment-head'><b>Shipping:</b></Col>
-                   <Col>${cart.shippingPrice}</Col>
-                 </Row>
-               </ListGroup.Item>
-               <ListGroup.Item>
-                 <Row>
-                   <Col className='payment-head'><b>Tax:</b></Col>
-                   <Col>${cart.taxPrice}</Col>
-                 </Row>
-               </ListGroup.Item>
-               <ListGroup.Item>
-                 <Row>
-                   <Col className='payment-head'><b>Total:</b></Col>
-                   <Col>${cart.totalPrice}</Col>
-                 </Row>
-               </ListGroup.Item>
-               <ListGroup.Item>
-                 {error && <Message variant='danger'>{error}</Message>}
-               </ListGroup.Item>
-               <ListGroup.Item>
-                 <Button
-                   type='button'
-                   className='button-full'
-                   disabled={cart.cartItems === 0}
-                   onClick={placeOrderHandler}
-                 >
-                   Place Order
-                 </Button>
-                 {isLoading && <Loader />}
-               </ListGroup.Item>
-             </ListGroup>
-           </Card>
-         </Col>
-       </Row>
-    </>
-  )
-}
+          </Col>
+          <Col md={4}>
+            <Card className='payment-right'>
+              <ListGroup variant='flush'>
+                <ListGroup.Item>
+                  <h3 className='payment-head'>Order Summary</h3>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col className='payment-head'><b>Items:</b></Col>
+                    <Col>${cart.itemsPrice}</Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col className='payment-head'><b>Shipping:</b></Col>
+                    <Col>${cart.shippingPrice}</Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col className='payment-head'><b>Tax:</b></Col>
+                    <Col>${cart.taxPrice}</Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col className='payment-head'><b>Total:</b></Col>
+                    <Col>${cart.totalPrice}</Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  {error && <Message variant='danger'>{JSON.stringify(error)}</Message>}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Button
+                    type='button'
+                    className='button-full'
+                    disabled={cart.cartItems.length === 0}
+                    onClick={placeOrderHandler}
+                  >
+                    Place Order
+                  </Button>
+                  {isLoading && <Loader />}
+                </ListGroup.Item>
+              </ListGroup>
+            </Card>
+          </Col>
+        </Row>
+     </>
+   )
+ }
 
-export default PlaceOrder
+ export default PlaceOrder

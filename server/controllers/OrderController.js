@@ -9,7 +9,11 @@ const addOrderItems = asyncHandler(async (req, res) => {
     const {
         orderItems, shippingAddress, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice
     } = req.body;
-    
+
+    // Debugging logs
+    // console.log('Request body:', req.body);
+    // console.log('User ID:', req.user ? req.user._id : 'User not found');
+
     if (orderItems && orderItems.length === 0) {
         res.status(400);
         throw new Error('Oops! No order items');
@@ -30,6 +34,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
         });
 
         const createdOrder = await order.save();
+        // console.log('Created Order:', createdOrder);
         res.status(201).json(createdOrder);
     }
 });
