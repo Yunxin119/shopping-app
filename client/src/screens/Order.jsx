@@ -4,7 +4,7 @@ import {Button, Row, Col, ListGroup, Image, Card} from 'react-bootstrap';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { useGetOrderDetailsQuery, usePayOrderMutation, useGetPaypalClientIdQuery } from '../slices/ordersApiSlice';
+import { useGetOrderDetailsQuery, usePayOrderMutation, useGetPaypalClientIdQuery, useDeliverOrderMutation } from '../slices/ordersApiSlice';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -13,9 +13,21 @@ const Order = () => {
     const { data: order, refetch, isLoading, error } = useGetOrderDetailsQuery(orderId);
 
     const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
+    const { userInfo } = useSelector((state) => state.auth)
+    const [ deliverOrder, { isLoading: loadingDeliver, error: errorDeliver}] = useDeliverOrderMutation();
+
+    const deliverOrderHandler = async () => {
+        try {
+            await deliverOrder(orderId);
+            refetch();
+            toast.success('Order delivered')
+        } catch (error) {
+            toast.error( error?.data?.message || error.error || JSON.stringify(error))
+        }
+    }
+    //Paypal
     const [{isPending}, paypalDispatch] = usePayPalScriptReducer();
     const { data: paypal, isLoading: loadingPaypal, error: paypalError } = useGetPaypalClientIdQuery();
-    const { userInfo } = useSelector((state) => state.auth)
 
     useEffect(() => {
         if (!paypalError && !loadingPaypal && paypal.clientId) {
@@ -104,7 +116,7 @@ const Order = () => {
                             {order.shippingAddress.country}
                         </p>
                         { order.isDelivered? (
-                            <Message variant='success'>Delivered</Message>
+                            <Message variant='success'>Delivered at {order.deliveredAt.substring(0,10)}</Message>
                         ) : (
                             <Message variant='danger'>Not Delivered</Message>
                         )}
@@ -118,7 +130,7 @@ const Order = () => {
                         </p>
 
                         { order.isPaid? (
-                            <Message variant='success'>Paid</Message>
+                            <Message variant='success'>Paid at {order.paidAt.substring(0,10)}</Message>
                         ) : (
                             <Message variant='danger'>Not Paid</Message>
                         )}
@@ -193,17 +205,28 @@ const Order = () => {
                         {error && <Message variant='danger'>{error}</Message>}
                     </ListGroup.Item> 
 
+                    {/* Payment Buttons with Paypal */}
                     { !order.isPaid && (
                         <ListGroup.Item>
                             {loadingPay && <Loader />}
                             {isPending ? (<Loader />) : (
                                 <div>
-                                    {/* <Button onClick={onApproveTest} style={{marginBottom: '10px'}}>Test Pay Order</Button> */}
+                                    <Button onClick={onApproveTest} style={{marginBottom: '10px'}}>Test Pay Order</Button>
                                     
                                         <PayPalButtons createOrder={createOrder} onApprove={onApprove} onError={onError} />
                                     
                                 </div>
                             )}
+                        </ListGroup.Item>
+                    )}
+
+                    {/* Deliver Button */}
+                    { loadingDeliver && <Loader />}
+                    { userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                        <ListGroup.Item>
+                            <Button type='button' className='btn button-full' onClick={deliverOrderHandler}>
+                                Delivered
+                            </Button>
                         </ListGroup.Item>
                     )}
                     </ListGroup>
