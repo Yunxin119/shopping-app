@@ -55,8 +55,8 @@ const Profile = () => {
     
   return (
     <Row>
-       <Col md={9}>
-         <h2 className='my-2'>My Orders</h2>
+       <Col md={8}>
+         <h2 className='my-3'>My Orders</h2>
          {isLoading ? (
            <Loader />
          ) : error ? (
@@ -113,8 +113,8 @@ const Profile = () => {
 
          )}
        </Col>
-       <Col md={3} className='profile-update'>
-         <h2 className='my-2'>Update Profile</h2>
+       <Col md={3} className='mx-4'>
+         <h2 className='my-3'>Update Profile</h2>
 
          <Form onSubmit={submitHandler} className='my-3'>
            <Form.Group className='my-2' controlId='username'>

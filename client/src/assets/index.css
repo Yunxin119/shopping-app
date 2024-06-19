@@ -206,10 +206,6 @@ table th {
 }
 
 .order-table {
-  width: calc(75%-20px);
-  margin-right: 20px;
-}
-
-.profile-update {
-  width: calc(25%-10px);
+  width: calc(100%-0.5rem);
+  margin-right: 0.5rem;
 }
