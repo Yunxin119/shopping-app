@@ -27,6 +27,7 @@ import Order from './screens/Order';
 import Profile from './screens/Profile';
 import AdminRoute from './components/AdminRoute';
 import OrderList from './screens/OrderList';
+import UserList from './screens/UserList';
 
 
 const router = createBrowserRouter(
@@ -48,6 +49,7 @@ const router = createBrowserRouter(
 
       <Route path='' element={<AdminRoute />}>
         <Route index={true} path='/admin/orderlist' element={<OrderList />} />
+        <Route index={true} path='/admin/userlist' element={<UserList />} />
       </Route>
     </Route>
   )

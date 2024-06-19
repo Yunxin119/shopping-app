@@ -65,11 +65,14 @@ return (
                         </LinkContainer>
                     )}
                     { userInfo && userInfo.isAdmin && (
-                        <NavDropdown title='Admin' id = 'adminmenu'>
+                        <NavDropdown title='Manage' id = 'adminmenu' className='custom-nav-txt'>
                             <LinkContainer to = '/admin/orderlist'>
                                 <NavDropdown.Item>Orders</NavDropdown.Item>
                             </LinkContainer>
-                            
+                            <LinkContainer to = '/admin/userlist'>
+                                <NavDropdown.Item>Users</NavDropdown.Item>
+                            </LinkContainer>
+
                         </NavDropdown>
                     )}
 
