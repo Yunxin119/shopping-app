@@ -25,6 +25,8 @@ import Payment from './screens/Payment';
 import PlaceOrder from './screens/PlaceOrder';
 import Order from './screens/Order';
 import Profile from './screens/Profile';
+import AdminRoute from './components/AdminRoute';
+import OrderList from './screens/OrderList';
 
 
 const router = createBrowserRouter(
@@ -42,6 +44,10 @@ const router = createBrowserRouter(
         <Route index={true} path='/placeorder' element={<PlaceOrder />} />
         <Route index={true} path='/order/:id' element={<Order />} />
         <Route index={true} path='/profile' element={<Profile />} />
+      </Route>
+
+      <Route path='' element={<AdminRoute />}>
+        <Route index={true} path='/admin/orderlist' element={<OrderList />} />
       </Route>
     </Route>
   )
