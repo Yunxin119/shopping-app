@@ -204,3 +204,12 @@ table th {
   justify-content: center;
   margin: 5% auto 0 auto;
 }
+
+.order-table {
+  width: calc(75%-20px);
+  margin-right: 20px;
+}
+
+.profile-update {
+  width: calc(25%-10px);
+}
