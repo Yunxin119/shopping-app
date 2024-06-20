@@ -52,7 +52,7 @@ const EditProduct = () => {
 
     const uploadFileHandler = async(e) => {
         const formData = new FormData();
-        formData.append('image', e.target.file[0]);
+        formData.append('image', e.target.file);
         try {
             const res = await uploadImage(formData).unwrap();
             toast.success(res.message);
@@ -148,7 +148,7 @@ const EditProduct = () => {
                         ></Form.Control>
                         <Form.Control type='file' lable='Choose File' onChange={ uploadFileHandler }></Form.Control>
                     </Form.Group> 
-                    <Button className='btn button-full my-3'>Save Changes</Button>
+                    <Button className='btn button-full my-3' onClick={submitHandler}>Save Changes</Button>
                 </Form>
             )
             }
