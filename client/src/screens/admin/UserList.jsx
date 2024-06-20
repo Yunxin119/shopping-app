@@ -2,19 +2,29 @@ import React, { useState } from 'react'
 import { FaTimes, FaCheck, FaEdit, FaTrash } from 'react-icons/fa'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button } from 'react-bootstrap'
-import { useGetAllUsersQuery } from '../../slices/usersApiSlice'
+import { useDeleteUserMutation, useGetAllUsersQuery } from '../../slices/usersApiSlice'
 import Message from '../../components/Message'
 import Loader from '../../components/Loader'
+import { toast } from 'react-toastify'
 
 
 const UserList = () => {
-    const { data: users, isLoading ,error } = useGetAllUsersQuery();
-    const deleteUserHandler = () => {
-        console.log('delete user handler')
+    const { data: users, isLoading ,error, refetch } = useGetAllUsersQuery();
+    const [deleteUser, {isLoading: loadingDelete}] = useDeleteUserMutation();
+    const deleteUserHandler = async (id) => {
+        if (window.confirm('Sure to delete this user?')) {
+            try {
+                await deleteUser(id);
+                refetch();
+              } catch (err) {
+                toast.error(err?.data?.message || err.error);
+              }
+        }
     }
 
   return (
     <>
+    {loadingDelete && <Loader />}
     {isLoading ? (
         <Loader />
     ) 
