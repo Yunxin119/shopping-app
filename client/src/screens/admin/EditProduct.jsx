@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import Message from '../../components/Message'
 import Loader from '../../components/Loader'
 import FormContainer from '../../components/FormContainer'
-import { useUpdateProductMutation, useGetProductDetailQuery } from '../../slices/productsApiSlice'
+import { useUpdateProductMutation, useGetProductDetailQuery, useUploadImageMutation } from '../../slices/productsApiSlice'
 import { LinkContainer } from 'react-router-bootstrap'
 
 const EditProduct = () => {
@@ -27,6 +27,7 @@ const EditProduct = () => {
     } = useGetProductDetailQuery(productId);
 
     const [updateProduct, {isLoading: updateLoading, error: updateError}] = useUpdateProductMutation();
+    const [uploadImage, {isLoading: imageLoading, error: imageError}] = useUploadImageMutation();
 
     const submitHandler = async(e) => {
         e.preventDefault();
@@ -44,6 +45,18 @@ const EditProduct = () => {
             toast.success('Product updated');
             refetch();
             navigate('/admin/productlist');
+        } catch (error) {
+            toast.error(error?.data?.message || error.error)
+        }
+    }
+
+    const uploadFileHandler = async(e) => {
+        const formData = new FormData();
+        formData.append('image', e.target.file[0]);
+        try {
+            const res = await uploadImage(formData).unwrap();
+            toast.success(res.message);
+            setImage(res.image);
         } catch (error) {
             toast.error(error?.data?.message || error.error)
         }
@@ -126,14 +139,15 @@ const EditProduct = () => {
                             style={{ resize: 'none', height: '100px', width: '100%' }}
                         ></Form.Control>
                     </Form.Group> 
-                    {/* <Form.Group controlId='image' className='my-2'>
-                        <Form.Label>image</Form.Label>
+                    <Form.Group controlId='image' className='my-2'>
+                        <Form.Label>Image</Form.Label>
                         <Form.Control
-                            type='image'
+                            type='text'
                             value={image}
                             onChange={(e) => setImage(e.target.value)}
                         ></Form.Control>
-                    </Form.Group>  */}
+                        <Form.Control type='file' lable='Choose File' onChange={ uploadFileHandler }></Form.Control>
+                    </Form.Group> 
                     <Button className='btn button-full my-3'>Save Changes</Button>
                 </Form>
             )
