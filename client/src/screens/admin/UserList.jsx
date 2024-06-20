@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { FaTimes, FaCheck, FaEdit, FaTrash } from 'react-icons/fa'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button } from 'react-bootstrap'
-import { useGetAllUsersQuery } from '../slices/usersApiSlice'
-import Message from '../components/Message'
-import Loader from '../components/Loader'
+import { useGetAllUsersQuery } from '../../slices/usersApiSlice'
+import Message from '../../components/Message'
+import Loader from '../../components/Loader'
 
 
 const UserList = () => {

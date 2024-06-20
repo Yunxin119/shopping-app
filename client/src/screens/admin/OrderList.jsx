@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { FaTimes } from 'react-icons/fa'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button } from 'react-bootstrap'
-import { useGetAllOrdersQuery } from '../slices/ordersApiSlice'
-import Message from '../components/Message'
-import Loader from '../components/Loader'
+import { useGetAllOrdersQuery } from '../../slices/ordersApiSlice'
+import Message from '../../components/Message'
+import Loader from '../../components/Loader'
 
 const OrderList = () => {
     const{data: orders, isLoading, error} = useGetAllOrdersQuery();

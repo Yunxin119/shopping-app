@@ -26,9 +26,10 @@ import PlaceOrder from './screens/PlaceOrder';
 import Order from './screens/Order';
 import Profile from './screens/Profile';
 import AdminRoute from './components/AdminRoute';
-import OrderList from './screens/OrderList';
-import UserList from './screens/UserList';
-import ProductList from './screens/ProductList';
+import OrderList from './screens/admin/OrderList';
+import UserList from './screens/admin/UserList';
+import ProductList from './screens/admin/ProductList';
+import EditProduct from './screens/admin/EditProduct';
 
 
 const router = createBrowserRouter(
@@ -52,6 +53,7 @@ const router = createBrowserRouter(
         <Route index={true} path='/admin/orderlist' element={<OrderList />} />
         <Route index={true} path='/admin/userlist' element={<UserList />} />
         <Route index={true} path='/admin/productlist' element={<ProductList/>} />
+        <Route index={true} path='/admin/product/:id/edit' element={<EditProduct />} />
       </Route>
     </Route>
   )

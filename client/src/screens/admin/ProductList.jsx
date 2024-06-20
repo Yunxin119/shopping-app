@@ -1,18 +1,42 @@
 import React from 'react'
-import { FaTimes, FaCheck, FaEdit, FaTrash } from 'react-icons/fa'
+import { FaEdit, FaTrash, FaPlus } from 'react-icons/fa'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button } from 'react-bootstrap'
-import { useGetAllProductsQuery } from '../slices/productsApiSlice'
-import Message from '../components/Message'
-import Loader from '../components/Loader'
+import { toast } from 'react-toastify'
+import { Table, Button, Row, Col } from 'react-bootstrap'
+import { useGetAllProductsQuery, useCreateProductMutation } from '../../slices/productsApiSlice'
+import Message from '../../components/Message'
+import Loader from '../../components/Loader'
 
 const ProductList = () => {
-    const { data: products, isLoading ,error } = useGetAllProductsQuery();
+    const { data: products, isLoading ,error, refetch } = useGetAllProductsQuery();
+
+    const [createProduct, {isLoading: loadingCreate }] = useCreateProductMutation();
     const deleteProductHandler = () => {
         console.log('delete product handler')
     }
+
+    const createProductHandler = async() => {
+        if (window.confirm('Sure to create product?')) {
+            try {
+                await createProduct();
+                refetch();
+            } catch (err) {
+                toast.error(err?.data?.message || err.error);
+            }
+        }
+    }
   return (
     <>
+        <Row className='align-items-center'>
+            <Col>
+            <h1 className='my-3'>Products</h1>
+            </Col>
+            <Col className='text-end'>
+            <Button className='btn-sm m-3 my-3' onClick={createProductHandler}>
+                <FaPlus className='mx-1'/> New Product
+            </Button>
+            </Col>
+        </Row>
     {isLoading ? (
         <Loader />
     ) 
