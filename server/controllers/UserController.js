@@ -148,10 +148,10 @@ const getUserProfile = asyncHandler(async (req, res) => {
 })
 
 // @desc: update user
-// @route: PATCH /api/users/profile
+// @route: PUT /api/users/profile
 // @access: Private
 const updateUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.params.id);
   if (user) {
     user.username = req.body.username || user.username;
     user.email = req.body.email || user.email;
