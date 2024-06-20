@@ -8,6 +8,8 @@ import ProductRoutes from './routes/ProductRoutes.js';
 import UserRoutes from './routes/UserRoutes.js'
 import OrderRoutes from './routes/OrderRoutes.js'
 import { notFound, errorHandler } from './middleware/errorHandler.js';
+import UploadRoutes from './routes/UploadRoutes.js'
+
 
 // connect to mongoDB
 connect();
@@ -32,8 +34,17 @@ app.use(cookieParser())
 app.use('/api/products', ProductRoutes);
 app.use('/api/users', UserRoutes);
 app.use('/api/orders', OrderRoutes);
+
+// upload file route
+app.use('/api/upload', UploadRoutes)
+
 // use paypal in the app
 app.get('/api/config/paypal', (req, res) => res.send({ clientId: process.env.PAYPAL_CLIENT_ID }));
+
+// set __dirname to current directory
+const __dirname = path.resolve();
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
+
 // error handler
 app.use(notFound);
 app.use(errorHandler);
