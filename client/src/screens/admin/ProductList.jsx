@@ -3,12 +3,15 @@ import { FaEdit, FaTrash, FaPlus } from 'react-icons/fa'
 import { LinkContainer } from 'react-router-bootstrap'
 import { toast } from 'react-toastify'
 import { Table, Button, Row, Col } from 'react-bootstrap'
-import { useGetAllProductsQuery, useCreateProductMutation, useDeleteProductMutation } from '../../slices/productsApiSlice'
+import { useGetProductsQuery, useCreateProductMutation, useDeleteProductMutation } from '../../slices/productsApiSlice'
 import Message from '../../components/Message'
 import Loader from '../../components/Loader'
+import { useParams } from 'react-router-dom'
+import Page from '../../components/Page'
 
 const ProductList = () => {
-    const { data: products, isLoading ,error, refetch } = useGetAllProductsQuery();
+    const pageNumber = useParams();
+    const { data, isLoading ,error, refetch } = useGetProductsQuery({pageNumber});
 
     const [createProduct, {isLoading: loadingCreate }] = useCreateProductMutation();
 
@@ -56,6 +59,7 @@ const ProductList = () => {
         <Message variant='danger'>{error?.data?.message || error.error }</Message>
     ) 
     : (
+        <>
         <Table className='table-md my-3'>
             <thead>
                 <th>ID</th>
@@ -66,7 +70,7 @@ const ProductList = () => {
                 <th></th>
             </thead>
             <tbody>
-                {products.map((product) => (
+                {data.products.map((product) => (
                     <tr key={product._id}>
                         <td>{product._id}</td>
                         <td>{product.name}</td>
@@ -94,6 +98,8 @@ const ProductList = () => {
                 ))}
             </tbody>
         </Table>
+        <Page pages={data.pages} page={data.page}/>
+        </>
     )
     }
     </>

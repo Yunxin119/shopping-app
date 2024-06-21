@@ -209,3 +209,10 @@ table th {
   width: calc(100%-0.5rem);
   margin-right: 0.5rem;
 }
+
+.page {
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
