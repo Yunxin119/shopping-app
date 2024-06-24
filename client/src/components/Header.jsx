@@ -5,6 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { useLogoutMutation } from '../slices/usersApiSlice';
 import { logout } from '../slices/authSlice';
 import { useNavigate } from 'react-router-dom';
+import Search from './Search';
 
 const Header = () => {
     const state = useSelector((state) => state);
@@ -38,6 +39,7 @@ return (
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav'>
                 <Nav className='ms-auto'>
+                    <Search />
                     <LinkContainer to='/cart'>
                         <Nav.Link className='custom-nav-txt'>
                             <FaShoppingCart /> Cart

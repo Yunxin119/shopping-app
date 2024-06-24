@@ -216,3 +216,7 @@ table th {
   align-items: center;
   margin-top: 20px;
 }
+
+.search {
+  font-size: 14px;
+}
