@@ -38,6 +38,19 @@ app.use('/api/orders', OrderRoutes);
 // upload file route
 app.use('/api/upload', UploadRoutes)
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(path.resolve(), '/client/build')));
+
+    app.get('*', (req, res) => 
+        res.sendFile(path.resolve(path.resolve(), 'client', 'build', 'index.html'))
+    )
+} else {
+    app.get('/', (req, res) => {
+        res.send('API is running');
+    })
+};
+
+
 // use paypal in the app
 app.get('/api/config/paypal', (req, res) => res.send({ clientId: process.env.PAYPAL_CLIENT_ID }));
 
