@@ -16,8 +16,8 @@ connect();
 
 const app = express();
 
-// const port = process.env.PORT || 5000;
-const port = 5000;
+const port = process.env.PORT || 5000;
+// const port = 5000;
 
 //Home
 app.get('/', (req, res) => {
