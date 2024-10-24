@@ -122,5 +122,12 @@ const createProductReview = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc Fetch carosel products
+// @route GET /api/products/top
+// @access Public
+const getCarousel = asyncHandler(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(5);
+  res.status(200).json(products);
+});
 
-export { getProductById, getProducts, createProduct, updateProduct, deleteProduct, createProductReview };
+export { getProductById, getProducts, createProduct, updateProduct, deleteProduct, createProductReview, getCarousel };

@@ -6,6 +6,7 @@ import Product from '../components/Product'
 import { useGetProductsQuery } from '../slices/productsApiSlice'
 import Message from '../components/Message'
 import { Link, useParams } from 'react-router-dom'
+import ProductCarousel from '../components/ProductCarousel'
 import Page from '../components/Page'
 
 const Home = () => {
@@ -15,8 +16,10 @@ const Home = () => {
 
   return (
     <>
-    {keyword && (
+    {keyword ? (
       <Link to='/' className='btn btn-light my-3'>Go back</Link>
+    ) : (
+      <ProductCarousel />
     )}
     {isLoading ? (
       <Loader /> 
