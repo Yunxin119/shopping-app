@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { useParams, useNavigate } from 'react-router-dom'
+import { FaSearch } from "react-icons/fa";
 
 
 const Search = () => {
@@ -29,7 +30,7 @@ const Search = () => {
         onChange={(e) => setKeyword(e.target.value)}
         >
         </Form.Control>
-        <Button type='submit' className='p-1.5 mx-1 search' variant='outline-success'> Search </Button>
+        <Button type='submit' className='mx-2 p-1 search searchbtn'><FaSearch /> </Button>
     </Form>
   )
 }

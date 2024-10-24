@@ -5,7 +5,7 @@ import Loader from '../components/Loader'
 import Product from '../components/Product'
 import { useGetProductsQuery } from '../slices/productsApiSlice'
 import Message from '../components/Message'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import Page from '../components/Page'
 
 const Home = () => {
@@ -15,6 +15,9 @@ const Home = () => {
 
   return (
     <>
+    {keyword && (
+      <Link to='/' className='btn btn-light my-3'>Go back</Link>
+    )}
     {isLoading ? (
       <Loader /> 
     ): error ? (

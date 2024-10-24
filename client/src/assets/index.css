@@ -218,5 +218,21 @@ table th {
 }
 
 .search {
-  font-size: 14px;
+  font-size: 15px;
+  height: 32px;
+  border-color: #a4a4a4;
+}
+
+.searchbtn {
+  border: 0px;
+  color:#676767;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.searchbtn:hover {
+  border: 0px;
+  color:#414141;
+  background-color: transparent;
+  box-shadow: none;
 }
